@@ -14,16 +14,16 @@ keyboard? With this plugin, you can. While it may not replace the mouse in all
 situations, there are plenty of cases where one will not have to lift their
 hands off the keyboard just to nudge the mouse cursor away a little.
 
-Of course, there are a lot more one can do with the plugin than to nudge the
-cursor! Mouse keys are provided for all four *and* diagonal movement; mouse
-buttons; and a unique warping mechanism too. And not only these: the speed of
-the cursor, the mouse wheel, and that of acceleration can all be configured to
+Of course, there is a lot more one can do with the plugin than to nudge the
+cursor! Mouse keys are provided for all four directions *and* diagonal movement; mouse
+buttons; and a unique warping mechanism. In addition, the speed & acceleration of
+the cursor and the speed of the mouse wheel can all be configured to
 match one's desired behaviour.
 
 ## Using the plugin
 
 To use the plugin, simply include the header, make sure the `MouseKeys` object
-is properly used, and place mouse keys on your keymap. It is best illustrated
+is properly `use`'d, and place mouse keys on your keymap. It is best illustrated
 with an example:
 
 ```c++
@@ -49,12 +49,12 @@ control of the mouse. They can be divided into a few groups:
 ### Cursor movement
 
 The simplest set of keys are the mouse cursor movement keys. These move the
-cursor one direction or the other, with speed and acceleration factored in. When
+cursor in one direction, with a given speed and acceleration. When
 a mouse cursor movement key is held down, it will move `.speed` pixels each
-`.speedDelay` milliseconds without acceleration. But when `.accelSpeed` is
+`.speedDelay` milliseconds (neglecting acceleration). When `.accelSpeed` is
 non-zero (and it is not zero by default), the speed will increase by
-`.accelSpeed` every `.accelDelay` milliseconds. Thus, unless configured
-otherwise, holding a direction will move that way at increasing speed.
+`.accelSpeed` every `.accelDelay` milliseconds. Thus, by default, holding 
+a direction key will move that way at an increasing speed.
 
 One can hold more than one key down at the same time, and the cursor will move
 towards a direction that is the combination of the keys held. For example,
@@ -87,13 +87,14 @@ acceleration involved. One just presses them.
 
 ### Warping
 
-Warping is one of the most interesting features of the plugin, and is a feature
+Warping is one of the most interesting features of the plugin and is a feature
 unique to Kaleidoscope, as far as we can tell. The warping keys position the
-mouse cursor within a quadrant of the screen on first press, and any subsequent
-taps will warp within the previously selected quadrant. For example, pressing
+mouse cursor within a quadrant of the screen on first press, with any subsequent
+taps warping within the previously selected quadrant. For example, pressing
 the north-west warp key twice will first jump to the middle of the north-west
 quadrant of your screen, then select the north-west quadrant of that, and jump
-to the middle of it.
+to the middle of it, resulting in the cursor being three-quarters of the way 
+between the center and top-left corner of your screen.
 
 To stop warping, use any other mouse key, or hit the "warp end" key.
 
@@ -111,29 +112,27 @@ The warping keys are the following:
 
 ## Plugin methods
 
-The plugin provides a `MouseKeys` object, with the following methods and
-properties available:
+The plugin provides a `MouseKeys` object, with the following properties available:
 
 ### `.speed` and `.speedDelay`
 
-> These two control the speed of the mouse cursor, when a movement key is held.
-> The former, `.speed`, controls the amount of pixels the cursor moves, when it
-> has to move, and defaults to 1. The latter, `.speedDelay` is the amount of
-> time - in milliseconds - to wait between two movements, and defaults to 0, no
-> delay.
+> These two control the speed of the mouse cursor when a movement key is held.
+> The former, `.speed`, controls the number of pixels by which the cursor
+> moves and defaults to 1. The latter, `.speedDelay`, is the amount of time 
+> in milliseconds to wait between two movements and defaults to 0 (no delay).
 
 ### `.accelSpeed` and `.accelDelay`
 
 > These two properties control the speed of acceleration. The former,
-> `.accelSpeed`, controls how much the speed shall be increased at each step,
-> while the second, `.accelDelay`, controls how often (in milliseconds)
-> acceleration should be applied.
+> `.accelSpeed`, controls by how many pixels the speed shall be increased at
+> each step, while the second, `.accelDelay`, controls how often (in
+> milliseconds) acceleration should be applied.
 >
 > They default to 1 pixel and 50 milliseconds, respectively.
 
 ### `.wheelSpeed` and `.wheelDelay`
 
 > The last two properties supported by the plugin control the mouse wheel
-> scrolling speed. The former, `.wheelSpeed`, controls the amount of ticks the
-> wheel shall scroll, and defaults to 1. The second, `.wheelDelay`, controls the
-> delay between two scroll events, and defaults to 50 milliseconds.
+> scrolling speed. The former, `.wheelSpeed`, controls the number of ticks the
+> wheel shall scroll by and defaults to 1. The second, `.wheelDelay`, controls the
+> delay between two scroll events and defaults to 50 milliseconds.
